@@ -1,0 +1,88 @@
+#edit-socialloginandsocialshare-label-string-wrapper {
+    clear: both;
+}
+
+#lr-tabs {
+    bottom: -1px;
+    font-size: 1.54em;
+    line-height: 1.54em;
+    margin: 0;
+}
+
+div#lr_tabs a {
+    border: 1px solid #aaaaaa /*{borderColorHeader}*/;
+    background: #cccccc;
+    -moz-border-radius: 8px 8px 0 0;
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    border-radius: 8px 8px 0 0;
+    color: #000;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0 5px 2px 10px;
+    outline: 0;
+    padding: 0 14px;
+    text-decoration: none;
+}
+
+div#lr_tabs a.active, div#lr_tabs a:hover {
+    color: white;
+    border: 1px solid white !important;
+    background: #666;
+}
+
+#show_horizontal_block {
+    display: block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: -15px;
+}
+
+.element-invisible {
+    display: none;
+}
+
+#socialshare_providers_list-wrapper > div, #socialshare_vetical_show_providers_list-wrapper > div, #socialcounter_show_providers_list-wrapper > div, #socialcounter_vertical_show_providers_list-wrapper > div {
+    display: inline-block;
+    margin-right: -60px;
+    width: 252px;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+ul#socialloginandsocialshare_rearrange_providers > li, ul#socialshare_vertical_rearrange_providers > li {
+    float: left;
+}
+
+.form-radios.socialloginandsocialshare_share_vertical_images > div {
+    display: inline;
+}
+
+.form-radios.socialloginandsocialshare_share_horizontal_images input {
+    vertical-align: top;
+    margin: 15px 15px 19px 6px;
+}
+
+.form-radios.socialloginandsocialshare_share_vertical_images > div {
+    float: left;
+    margin-right: 25px;
+}
+
+.form-radios.socialloginandsocialshare_share_vertical_images > div > label > input {
+    display: block;
+}
+
+#socialshare_vetical_show_providers_list-wrapper,
+#socialcounter_vertical_show_providers_list-wrapper,
+.lr-clear {
+    clear: both;
+}
+
+#edit-socialloginandsocialshare-share-vertical-images-4,
+#edit-socialloginandsocialshare-share-vertical-images-5,
+#edit-socialloginandsocialshare-share-vertical-images-6,
+#edit-socialloginandsocialshare-share-vertical-images-7 {
+    margin: 0px 15px 15px;
+}

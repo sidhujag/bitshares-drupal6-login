@@ -1,0 +1,219 @@
+#user-login-form .socialloginandsocialshare-links,
+#user-login .socialloginandsocialshare-links {
+    overflow: hidden;
+    padding-bottom: 15px;
+    padding-left: 0;
+}
+
+#user-login-form .socialloginandsocialshare-links li,
+#user-login .socialloginandsocialshare-links li {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+#user-register-form .socialloginandsocialshare-links,
+#user-register .socialloginandsocialshare-links {
+    overflow: hidden;
+    padding-bottom: 15px;
+    padding-left: 0;
+}
+
+#user-register-form .socialloginandsocialshare-links li,
+#user-register .socialloginandsocialshare-links li {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+.socialloginandsocialshare-idlinks {
+    color: #018FE2;
+    overflow: hidden;
+    padding-bottom: 15px;
+    padding-left: 0;
+}
+
+.socialloginandsocialshare-idlinks li {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+.socialloginandsocialshare-mapprovider {
+    font-weight: bold;
+}
+
+.socialloginandsocialshare-mapprovider img {
+    margin-right: 5px;
+}
+
+.LoginRadius_overlay {
+    background: rgb(127, 127, 127); /* The Fallback */
+    background: none no-repeat scroll 0 0 rgba(127, 127, 127, 0.6);
+    top: 0;
+    left: 0;
+    z-index: 100001;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 0;
+    position: fixed;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    filter: alpha(opacity=90);
+}
+
+#popupouter {
+    border-radius: 0 23px;
+    background: #f3f3f3;
+    left: 50%;
+    margin: -114px auto 0 -250px;
+    top: 45%;
+    overflow: auto;
+    padding: 0;
+    position: fixed;
+    width: 500px;
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: 100002;
+
+}
+
+.lr-popupheading {
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 20px;
+    padding: 15px;
+    text-align: center;
+}
+
+#outerp {
+    font-size: 17px;
+    line-height: 1.1em !important;
+    margin: 9px !important;
+    text-align: center !important;
+}
+
+#popupinner {
+    overflow: auto;
+    background: #ffffff;
+    padding: 15px 20px;
+}
+
+#textmatter {
+    margin-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #666666;
+    color: #222222;
+    font-size: 14px;
+    text-align: left;
+}
+
+.lr-noerror {
+    text-align: left;
+    background-color: #e1eabc;
+    margin-bottom: 12px;
+    padding: 12px;
+
+}
+
+#innerp {
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1em !important;
+    margin-bottom: 0;
+    margin-left: 10px;
+    padding: 0;
+    text-align: left !important;
+}
+
+.inputtxt {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #444;
+    font-size: 13px;
+    border: 1px solid #e2efe1;
+    width: 350px;
+    height: 27px;
+    margin-bottom: 5px !important;
+    padding-left: 10px;
+    border-radius: 0px 12px;
+    background: #fff;
+}
+
+.inputbutton {
+    border: #dcdcdc 1px solid !important;
+    text-decoration: none !important;
+    color: #6e6e6e !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px !important;
+    cursor: pointer !important;
+    background: #f3f3f3 !important;
+    padding: 6px 17px !important;
+    margin-right: 15px;
+    float: left;
+    border-radius: 0px 11px !important;
+    text-transform: none !important;
+    font-weight: normal !important;
+    margin-bottom: 0 !important;
+}
+
+.inputbutton:hover {
+    text-decoration: none !important;
+    cursor: pointer !important;
+    background: #f3f3f3 !important;
+    color: #000 !important;
+
+}
+
+#popupouter input:-webkit-autofill, #popupouter textarea:-webkit-autofill, #popupouter select:-webkit-autofill {
+    background: #fff;
+
+}
+
+#textdivpopup {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    text-align: right;
+    margin-left: 216px;
+}
+
+.spanpopup {
+    color: #00ccff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.span1 {
+    color: #333333;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+@media (max-width: 769px) {
+    #popupouter {
+        left: 0;
+        margin: 5% auto 0;
+        top: 0;
+        border-radius: 0 23px !important;
+        background: none repeat scroll 0 0 #f3f3f3;
+        border-radius: 4px;
+        overflow: auto;
+        padding: 0;
+        position: static;
+        width: 400px;
+    }
+
+    .inputtxt {
+        width: 336px;
+    }
+}
+
+@media (max-width: 480px) {
+    #popupouter {
+        width: 300px;
+        border-radius: 0 23px !important;
+    }
+
+    .inputtxt {
+        width: 236px;
+    }
+}

@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * @file
+ * Provides uninstall function for the socialloginandsocialshare module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function socialloginandsocialshare_install() {
+  drupal_install_schema('socialloginandsocialshare');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function socialloginandsocialshare_uninstall() {
+ drupal_uninstall_schema('socialloginandsocialshare');
+  variable_del('socialloginandsocialshare_help_desc');
+  variable_del('socialloginandsocialshare_apikey');
+  variable_del('socialloginandsocialshare_apisecret');
+  variable_del('socialloginandsocialshare_disable_traditional_login');
+  variable_del('socialloginandsocialshare_display_username');
+  variable_del('socialloginandsocialshare_userlogin_redirect');
+  variable_del('socialloginandsocialshare_userregister_redirect');
+  variable_del('socialloginandsocialshare_account_linking');
+  variable_del('socialloginandsocialshare_identity_label_string');
+  variable_del('socialloginandsocialshare_enable_vertical_share');
+  variable_del('socialloginandsocialshare_enable_horizontal_share');
+  variable_del('socialloginandsocialshare_share_horizontal_images');
+  variable_del('socialshare_position_top');
+  variable_del('socialshare_position_bottom');
+  variable_del('socialshare_show_pages');
+  variable_del('socialshare_show_exceptpages');
+  variable_del('socialshare_vertical_show_pages');
+  variable_del('socialshare_vertical_show_exceptpages');
+  variable_del('socialloginandsocialshare_share_vertical_images');
+  variable_del('socialshare_vertical_position');
+  variable_del('socialloginandsocialshare_interface_size');
+  variable_del('socialloginandsocialshare_interface_columns');
+  variable_del('socialloginandsocialshare_interface_bgcolor');
+  variable_del('socialloginandsocialshare_attach_login_form');
+  variable_del('socialloginandsocialshare_loginpage_position');
+  variable_del('socialloginandsocialshare_registerpage_position');
+  variable_del('socialloginandsocialshare_showicon_location');
+  variable_del('socialloginandsocialshare_enable_user_registration');
+  variable_del('socialloginandsocialshare_force_registration');
+  variable_del('socialloginandsocialshare_email_required');
+  variable_del('socialloginandsocialshare_emailrequired_popup_top');
+  variable_del('socialloginandsocialshare_emailrequired_popup_text');
+  variable_del('socialloginandsocialshare_emailrequired_popup_wrong');
+  variable_del('socialloginandsocialshare_send_user_credentials');
+  variable_del('socialloginandsocialshare_email_content');
+  variable_del('socialloginandsocialshare_update_profile');
+  variable_del('socialloginandsocialshare_debug_mode');
+  variable_del('socialloginandsocialshare_user_fields');
+  variable_del('thanks_block');
+  variable_del('socialloginandsocialshare_custom_redirection');
+  variable_del('socialloginandsocialshare_share_horizontal');
+  variable_del('socialloginandsocialshare_selected_share_interface');
+  variable_del('socialshare_show_providers_list');
+  variable_del('socialloginandsocialshare_rearran_providers_list');
+  variable_del('socialloginandsocialshare_rearrange_providers_list');
+  variable_del('socialshare_counter_show_providers_list');
+  variable_del('socialloginandsocialshare_custom_register_redirection');
+}
+
+/**
+ * Implements hook_schema().
+ */
+function socialloginandsocialshare_schema() {
+  $schema['socialloginandsocialshare_mapusers'] = array(
+    'description' => 'Stores Engage linked account information (used in the Views integration).',
+    'fields' => array(
+      'aid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Authmap ID of the authmap table.',
+      ),
+      'provider' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'description' => 'The providers machine name.',
+      ),
+      'provider_id' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The providers unique id.',
+      ),
+    ),
+    'primary key' => array('aid'),
+  );
+  return $schema;
+}
