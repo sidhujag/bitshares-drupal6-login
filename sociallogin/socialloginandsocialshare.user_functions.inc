@@ -161,21 +161,14 @@ function socialloginandsocialshare_adduser($lrdata, &$form_state) {
  *
  * Submit sociallogin identities for the specified user.
  */
-function socialloginandsocialshare_user_identities_submit($account, $token = '') {
+function socialloginandsocialshare_user_identities_submit($account, $userprofile) {
   unset($_SESSION['lr_token']);
 
-  if (!class_exists(LoginRadius)) {
-    include 'socialloginandsocialshare.loginradius.inc';
-  }
 
-  $obj = new LoginRadius();
   drupal_set_title(check_plain($account->name));
 
-  if (user_is_logged_in() && $obj->loginradius_is_valid_guid($token)) {
-    if (!class_exists(LoginRadius)) {
-      include 'socialloginandsocialshare.loginradius.inc';
-    }
-    $userprofile = $obj->loginradius_get_user_profiledata($token);
+  if (user_is_logged_in() && $userprofile != '') {
+
 
     if (isset($userprofile->ID) && $userprofile->ID != '' && user_is_logged_in()) {
       $lrdata = socialloginandsocialshare_getuser_data($userprofile);

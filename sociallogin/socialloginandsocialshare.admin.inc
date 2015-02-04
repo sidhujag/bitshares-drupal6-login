@@ -56,6 +56,24 @@ function socialloginandsocialshare_admin_settings(&$form_state) {
     '#type' => 'fieldset',
     '#description' => $thanks_text,
   );
+  //cryptocurrency section
+  $crypto_group = 'Crypto-Currency settings';
+  $form[$crypto_group] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Crypto-Currency Settings'),
+    '#id' => 'crypto',
+    '#collapsible' => TRUE,
+    '#description' => t('For creating a Bitshares account, please visit <a href="bitshares.org" target="_blank">Bitshares.org</a>'),
+  );
+  $form[$crypto_group]['socialloginandsocialshare_bitshareslogin_enabled'] = array(
+    '#type' => 'radios',
+    '#title' => t('Do you want to allow users to login using Bitshares Login?'),
+    '#default_value' => variable_get('socialloginandsocialshare_bitshareslogin_enabled', 1),
+    '#options' => array(
+      1 => t('Yes, I want to allow users to be able to login using Bitshares Login'),
+      0 => t('No, I want my users to be able to login using Bitshares Login'),
+    ),
+  );
   $setup_group = 'setup';
   $form[$setup_group] = array(
     '#type' => 'fieldset',

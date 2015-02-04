@@ -96,7 +96,16 @@ function socialloginandsocialshare_menu() {
     'page arguments' => array('socialloginandsocialshare_user_register_validate'),
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
+    'weight' => 6,
+    'file' => 'socialloginandsocialshare.bitsharesloginapi.inc',
   );
+  $items['socialloginandsocialshare/bitshareslogin_handler'] = array(
+    'page callback' => 'socialloginandsocialshare_bitshares_login',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'weight' => 7,
+    'file' => 'socialloginandsocialshare.bitsharesloginapi.inc',
+   );
   return $items;
 }
 
@@ -152,9 +161,10 @@ function socialloginandsocialshare_help($path) {
     case 'admin/help#socialloginandsocialshare':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('This social login module is developed by LoginRadius which is a Software As A Service (SaaS).socialloginandsocialshare plugin enables social login on a Drupal website letting users log in through their existing IDs such as Facebook, Twitter, Google, Yahoo and over 15 more! Other than social login, socialloginandsocialshare plugin also include User Profile Data and Social Analytics. see the LoginRadius ') . l(t('visit site'), 'http://www.LoginRadius.com/', array('attributes' => array('target' => '_blank'))) . '</p>';
+      $output .= '<p>' . t('This social login module is developed by LoginRadius. Social Login module enables social login on a Drupal website letting users log in through their existing Crypto-Currency wallet such as Bitshares or online IDs such as Facebook, Twitter, Google, Yahoo and over 25 more! Other than social login, socialloginandsocialshare plugin also include User Profile Data and Social Analytics. see the LoginRadius ') . l(t('visit site'), 'http://www.LoginRadius.com/', array('attributes' => array('target' => '_blank'))) . '</p>';
       $title = t('Use');
       $items_list = array(
+        t('Secure Single-Sign-On authentication via blockchain technology'),
         t('Social login'),
         t('User profile data'),
         t('Social analytics'),
@@ -164,6 +174,9 @@ function socialloginandsocialshare_help($path) {
       $output .= theme('item_list', $items_list, $title);
       $important_title = t('Important links');
       $items = array(
+		l(t('How to setup Bitshares Login'), 'https://github.com/sidhujag/bitshareslogin-drupal7/', array('attributes' => array('target' => '_blank'))),
+        l(t('Bitshares Login demo'), 'http://faucet.bitshares.org/', array('attributes' => array('target' => '_blank'))),
+        l(t('Logging in via a Crypto-Currency wallet(blog)'), 'http://bytemaster.bitshares.org/article/2014/12/22/BitShares-Login/', array('attributes' => array('target' => '_blank'))),      
         l(t('Drupal live demo'), 'http://drupaldemo.loginradius.com/', $options = array('attributes' => array('target' => '_blank'))),
         l(t('Drupal Plugin Documentations'), 'https://www.loginradius.com/developers/Plugins/Drupal6x', $options = array('attributes' => array('target' => '_blank'))),
         l(t('LoginRadius'), 'http://www.LoginRadius.com/', $options = array('attributes' => array('target' => '_blank'))),
@@ -186,6 +199,7 @@ function socialloginandsocialshare_help($path) {
  * Implements hook_form_FORM_ID_alter().
  */
 function socialloginandsocialshare_form_alter(&$form, $form_state, $form_id) {
+  $bitsharesenabled = variable_get('socialloginandsocialshare_bitshareslogin_enabled', 1);	
   $api_key = trim(variable_get('socialloginandsocialshare_apikey', ''));
   $secret = trim(variable_get('socialloginandsocialshare_apisecret', ''));
   $iconpos = variable_get('socialloginandsocialshare_showicon_location', 0) ? 102 : -102;
@@ -209,14 +223,14 @@ function socialloginandsocialshare_form_alter(&$form, $form_state, $form_id) {
   $params = NULL;
   //Add Social Login interface at register form , user login form and user login block.
   if (($form_id == 'user_login_block' && variable_get('socialloginandsocialshare_attach_login_form', '') == 1) || ($form_id == 'user_login' && variable_get('socialloginandsocialshare_loginpage_position', '') == 1) || ($form_id == 'user_register' && variable_get('socialloginandsocialshare_registerpage_position', '') == 1)) {
-    if (!empty($api_key) && !empty($secret) && (!preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $api_key) || !preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $secret))) {
+    if ($bitsharesenabled != 1 && !empty($api_key) && !empty($secret) && (!preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $api_key) || !preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $secret))) {
       $form['socialloginandsocialshare_links'] = array(
         '#type' => 'item',
         '#title' => t('<div class="interface_error">Your LoginRadius API key or secret is not valid, please correct it or contact LoginRadius support at <a href="@this" target="_blank">www.LoginRadius.com</a></div>', array('@this' => 'http://www.Loginradius.com/')),
         '#weight' => $iconpos,
       );
     }
-    elseif (!empty($api_key) && !empty($secret)) {
+    elseif ((!empty($api_key) && !empty($secret)) || $bitsharesenabled == 1) {
       if (!user_access('administer site configuration')) {
         $form['socialloginandsocialshare_links'] = array(
           '#type' => 'item',
@@ -406,7 +420,37 @@ function socialloginandsocialshare_block_view($delta) {
 
   return $block;
 }
+function socialloginandsocialshare_bitshares_login(){
 
+	if(isset($_REQUEST['callback']))
+	{
+		
+		$response = '';
+		$callbackURL = $_REQUEST['callback'];
+		try {
+			$btsclient = new Bitshares();
+
+			$btsurl = $btsclient->createAuthUrl($callbackURL);
+			if($btsurl === false)
+			{
+				global $g_authurl_error;
+				$response['error']=  $g_authurl_error;
+				echo json_encode($response);
+				die();
+			}
+			$response['url'] = $btsurl;
+			
+
+		}	
+		catch (Exception $e){
+
+				$response['error']=  $e->getMessage();
+		}
+		drupal_json($response);
+		exit();
+  }
+  die();   
+}
 /**
  * @param $form_state
  * A keyed array containing the current state of the form.
@@ -460,13 +504,32 @@ function socialloginandsocialshare_user_register_validate(&$form_state) {
       drupal_goto();
     }
 
-    if (empty($lr_token)) {
+    if (empty($lr_token) && !isset($_REQUEST['client_key'])) {
       return FALSE;
     }
+    $userprofile = '';
+    if(isset($_REQUEST['client_key']))
+    {
+		$btsclient = new Bitshares();	
+		try
+		{	
+			$btsclient->authenticate();
+			$userprofile = $btsclient->userinfo_get();
+        }
+		catch (Exception $e){
 
-    // Get socialloginandsocialshare variable.
-    $obj = new LoginRadius();
-    $userprofile = $obj->loginradius_get_user_profiledata($lr_token);
+			$userprofile = '';
+		}        
+        	        
+        	
+    }
+    else if(!empty($lr_token) )
+    {
+		$obj = new LoginRadius();
+		$userprofile = $obj->loginradius_get_user_profiledata($lr_token);
+        
+    }
+
 
     //user is authenticate then handle login process.
     if (isset($userprofile->ID) && $userprofile->ID != '' && !user_is_logged_in()) {
@@ -501,7 +564,31 @@ function socialloginandsocialshare_user_register_validate(&$form_state) {
       socialloginandsocialshare_show_error_message($userprofile);
     }
   }
-  elseif (!empty($lr_token)) {
-    socialloginandsocialshare_user_identities_submit($user, $lr_token);
+  elseif (!empty($lr_token) || isset($_REQUEST['client_key'])) {
+	$userprofile = '';
+    if(isset($_REQUEST['client_key']))
+    {
+		$btsclient = new Bitshares();
+		try{		
+			$btsclient->authenticate();
+			$userprofile = $btsclient->userinfo_get();
+        }
+		catch (Exception $e){
+
+			$userprofile = '';
+		}        
+        	
+    }
+    else if(!empty($lr_token))
+    {
+		$obj = new LoginRadius();
+		if($obj->loginradius_is_valid_guid($lr_token))
+		{
+			$userprofile = $obj->loginradius_get_user_profiledata($lr_token);
+		}	
+        
+    }  
+    socialloginandsocialshare_user_identities_submit($user, $userprofile);
+
   }
 }
